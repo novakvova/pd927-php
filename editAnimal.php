@@ -132,10 +132,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 */ ?>
 
                 <label for="exampleInputPassword1">Select image to upload:</label>
+                <br>
+                <!-- --><?php
+                /*                echo "<input class='form-control' type='file' name='fileToUpload' id='fileToUpload'>"
+                                */ ?>
+                <input type="file" id="fileToUpload" name='fileToUpload' style="display:none">
+                <a href="#" onclick="openFileOption();return;">
+                    <img style="width: 450px; height: 450px; " id="blah"
+                         src="https://app.hhhtm.com/resources/assets/img/upload_img.jpg" alt="your image"/>
+                </a>
+                <br>
 
-                <?php
-                echo "<input class='form-control' type='file' name='fileToUpload' id='fileToUpload'>"
-                ?>
+                <script>
+                    blah = document.getElementById("blah")
+                    blah.src = "<?php echo $image; ?>"
+                </script>
+
 
                 <?php
                 foreach ($file_loading_error as &$value) {
@@ -150,5 +162,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
+<script>
+
+    fileToUpload = document.getElementsByName("fileToUpload")[0]
+    blah = document.getElementById("blah")
+    fileToUpload.onchange = function () {
+        const [file] = fileToUpload.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+
+    function openFileOption() {
+        document.getElementById("fileToUpload").click();
+    }
+
+
+</script>
 
 <?php include "_footer.php"; ?>
