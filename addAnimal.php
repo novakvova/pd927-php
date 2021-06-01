@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 blah.src = data;
                 // cropper.replace(data);
                 const cropper = new Cropper(blah, {
-                    aspectRatio: 16 / 9,
+                    aspectRatio: 1 / 1,
                     crop(event) {
                         console.log(event.detail.x);
                         console.log(event.detail.y);
