@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <input  type="file" id="fileToUpload" name='fileToUpload' style="display:none">
 
-                        <img style="width: 450px; height: 450px; " onclick="openFileOption();return;" id="blah" src="https://app.hhhtm.com/resources/assets/img/upload_img.jpg" alt="your image" />
+                        <img style="width: 450px; height: 450px; " id="blah" src="https://app.hhhtm.com/resources/assets/img/upload_img.jpg" alt="your image" />
 
                     <br>
                     <?php
@@ -131,48 +131,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <script src="/js/cropper.min.js"></script>
-<script>
-
-    fileToUpload = document.getElementsByName("fileToUpload")[0]
-    blah = document.getElementById("blah");
-
-    fileToUpload.onchange = function () {
-        const [file] = fileToUpload.files
-
-        if (file) {
-            var reader  = new FileReader();
-            reader.onload = function(event)
-            {
-                var data = event.target.result;
-                blah.src = data;
-                // cropper.replace(data);
-                const cropper = new Cropper(blah, {
-                    aspectRatio: 1 / 1,
-                    crop(event) {
-                        console.log(event.detail.x);
-                        console.log(event.detail.y);
-                        console.log(event.detail.width);
-                        console.log(event.detail.height);
-                        console.log(event.detail.rotate);
-                        console.log(event.detail.scaleX);
-                        console.log(event.detail.scaleY);
-                    },
-                });
-
-            }
-            //
-
-            reader.readAsDataURL(file);
-            //cropper.replace();//cropper('destroy').cropper('replace', blah);
-        }
-    }
-    function openFileOption()
-    {
-        document.getElementById("fileToUpload").click();
-    }
 
 
-</script>
+<?php include "_cropper_modal.php" ?>
 
 <?php include "_footer.php"; ?>
+
+
+
+<script>
+    $(function() {
+        const cropper = new Cropper(document.getElementById("img_cropped"), {
+            aspectRatio: 1 / 1,
+            crop(event) {
+                console.log(event.detail.x);
+                console.log(event.detail.y);
+                console.log(event.detail.width);
+                console.log(event.detail.height);
+                console.log(event.detail.rotate);
+                console.log(event.detail.scaleX);
+                console.log(event.detail.scaleY);
+            },
+        });
+        fileToUpload = document.getElementsByName("fileToUpload")[0]
+        $blah = $("#blah");
+
+
+        fileToUpload.onchange = function () {
+            const [file] = fileToUpload.files
+
+            if (file) {
+                var reader  = new FileReader();
+                reader.onload = function(event)
+                {
+                    var data = event.target.result;
+
+                    $("#cropperModal").modal("show");
+                    cropper.replace(data);
+                    setTimeout(function(){
+
+                    },200);
+
+
+                }
+                //
+
+                reader.readAsDataURL(file);
+                //cropper.replace();//cropper('destroy').cropper('replace', blah);
+            }
+        }
+        $blah.on("click", function openFileOption()
+        {
+            document.getElementById("fileToUpload").click();
+        });
+    });
+</script>
