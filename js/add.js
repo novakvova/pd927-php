@@ -11,8 +11,10 @@ $(function() {
             console.log(event.detail.scaleY);
         },
     });
-    fileToUpload = document.getElementsByName("fileToUpload")[0]
-    $blah = $("#blah");
+    var fileToUpload = document.getElementsByName("fileToUpload")[0]
+    var $blah = $("#blah");
+    var $btnCroppeImage = $("#btnCroppeImage");
+    var $cropperModal=$("#cropperModal");
 
 
     fileToUpload.onchange = function () {
@@ -24,7 +26,7 @@ $(function() {
             {
                 var data = event.target.result;
 
-                $("#cropperModal").modal("show");
+                $cropperModal.modal("show");
                 cropper.replace(data);
                 setTimeout(function(){
 
@@ -41,5 +43,10 @@ $(function() {
     $blah.on("click", function openFileOption()
     {
         document.getElementById("fileToUpload").click();
+    });
+
+    $btnCroppeImage.on("click", function(){
+        $blah.attr("src", cropper.getCroppedCanvas().toDataURL());
+        $cropperModal.modal("hide");
     });
 });
