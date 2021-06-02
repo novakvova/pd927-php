@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal" id="cropperModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -9,11 +9,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="container">
+                <div class="container-fluid">
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <img src="/img/unnamed.gif" id="img_cropped" width="90%">
+                        </div>
+                        <div class="col-md-4">
+
                         </div>
                     </div>
                 </div>
