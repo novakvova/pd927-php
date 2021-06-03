@@ -3,10 +3,11 @@
 <?php
 $name = "";
 $image_url = "";
-$image = "";
+$image = "https://app.hhhtm.com/resources/assets/img/upload_img.jpg";
 $file_loading_error=[];
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
+    $image= $_POST["imageUpload"];
     /*$image_url = $_POST['image'];*/
     $errors = [];
     if (empty($name)) {
@@ -70,12 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script>
         function addAnimal() {
-            $(`#name_error`).attr("hidden",true);
-            var name = document.forms[`addAnimalForm`][`name`];
-            if (name.value=='') {
-                $(`#name_error`).attr("hidden",false);
-                event.preventDefault()
-            }
+            // $(`#name_error`).attr("hidden",true);
+            // var name = document.forms[`addAnimalForm`][`name`];
+            // if (name.value=='') {
+            //     $(`#name_error`).attr("hidden",false);
+            //     event.preventDefault()
+            // }
         }
 
     </script>
@@ -108,8 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     */?>
 
                     <input  type="file" id="fileToUpload" name='fileToUpload' style="display:none">
+                    <?php
+                    echo "
+                    <img style='width: 300px; height: 300px; border-radius: 50%;' id='blah'
+                         src='{$image}' alt='your image' /> 
+                         
+                    <input type='hidden' value='{$image}' id='imageUpload' name='imageUpload'>";
+                         ?>
 
-                        <img style="width: 300px; height: 300px; border-radius: 50%;" id="blah" src="https://app.hhhtm.com/resources/assets/img/upload_img.jpg" alt="your image" />
 
                     <br>
                     <?php

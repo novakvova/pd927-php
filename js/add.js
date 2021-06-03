@@ -55,7 +55,11 @@ $(function() {
     });
 
     $btnCroppeImage.on("click", function(){
-        $blah.attr("src", cropper.getCroppedCanvas().toDataURL());
+        var imgData = cropper.getCroppedCanvas().toDataURL()
+        $blah.attr("src", imgData);
+
+        $("#imageUpload").val(imgData);
+
         $cropperModal.modal("hide");
     });
 });
