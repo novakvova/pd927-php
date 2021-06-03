@@ -21,37 +21,42 @@ $(function() {
     var $cropperModal=$("#cropperModal");
     var $rotate=$("#rotate");
 
+    var uploader;
 
     $rotate.on("click", function() {
        cropper.rotate(90);
     });
-
-    fileToUpload.onchange = function () {
-        const [file] = fileToUpload.files
-
-        if (file) {
-            var reader  = new FileReader();
-            reader.onload = function(event)
-            {
-                var data = event.target.result;
-
-                $cropperModal.modal("show");
-                cropper.replace(data);
-                setTimeout(function(){
-
-                },200);
-
-
-            }
-            //
-
-            reader.readAsDataURL(file);
-            //cropper.replace();//cropper('destroy').cropper('replace', blah);
-        }
-    }
     $blah.on("click", function openFileOption()
     {
-        document.getElementById("fileToUpload").click();
+        if (uploader) {
+            uploader.remove();
+        }
+        uploader = $('<input type="file" name="workImage" accept="image/* style="display:none"/>');
+        uploader.click();
+
+        uploader.on('change', function () {
+            const [file] = uploader[0].files
+
+            if (file) {
+                var reader  = new FileReader();
+                reader.onload = function(event)
+                {
+                    var data = event.target.result;
+
+                    $cropperModal.modal("show");
+                    cropper.replace(data);
+                    setTimeout(function(){
+
+                    },200);
+
+
+                }
+                //
+
+                reader.readAsDataURL(uploader[0].files[0]);
+                //cropper.replace();//cropper('destroy').cropper('replace', blah);
+            }
+        });
     });
 
     $btnCroppeImage.on("click", function(){

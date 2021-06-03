@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 /*                        echo"<input class='form-control'  accept='image/*' type='file' name='fileToUpload' id='fileToUpload'>"
                     */?>
 
-                    <input  type="file" id="fileToUpload" name='fileToUpload' style="display:none">
+<!--                    <input  type="file" id="fileToUpload" name='fileToUpload' style="display:none">-->
                     <?php
                     echo "
                     <img style='width: 300px; height: 300px; border-radius: 50%;' id='blah'
