@@ -13,10 +13,11 @@
 
                     <div class="row">
                         <div class="col-md-8">
-                            <img src="/img/unnamed.gif" id="img_cropped" width="90%">
+                            <img src="/img/noimage.jpg" id="img_cropped" width="100%">
                         </div>
                         <div class="col-md-4">
-
+                            <div class="preview ml-4"></div>
+                            <button  type="button" class="btn btn-info ml-5 mt-3" id="rotate">Rotate</button>
                         </div>
                     </div>
                 </div>

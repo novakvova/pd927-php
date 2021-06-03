@@ -82,6 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <?php include "_head.php"; ?>
 
+<?php include "_cropper_modal.php" ?>
+
     <div class="container">
         <div class="p-3">
             <h2>Add new animal</h2>
@@ -107,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <input  type="file" id="fileToUpload" name='fileToUpload' style="display:none">
 
-                        <img style="width: 450px; height: 450px; " id="blah" src="https://app.hhhtm.com/resources/assets/img/upload_img.jpg" alt="your image" />
+                        <img style="width: 300px; height: 300px; border-radius: 50%;" id="blah" src="https://app.hhhtm.com/resources/assets/img/upload_img.jpg" alt="your image" />
 
                     <br>
                     <?php
@@ -133,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-<?php include "_cropper_modal.php" ?>
+
 
 <?php include "_footer.php"; ?>
 

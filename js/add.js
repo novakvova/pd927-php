@@ -1,6 +1,10 @@
+
+
 $(function() {
+
     const cropper = new Cropper(document.getElementById("img_cropped"), {
         aspectRatio: 1 / 1,
+        preview: ".preview",
         crop(event) {
             console.log(event.detail.x);
             console.log(event.detail.y);
@@ -15,7 +19,12 @@ $(function() {
     var $blah = $("#blah");
     var $btnCroppeImage = $("#btnCroppeImage");
     var $cropperModal=$("#cropperModal");
+    var $rotate=$("#rotate");
 
+
+    $rotate.on("click", function() {
+       cropper.rotate(90);
+    });
 
     fileToUpload.onchange = function () {
         const [file] = fileToUpload.files
