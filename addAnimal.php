@@ -1,7 +1,28 @@
 <?php require_once "connection_database.php"; ?>
 <?php require_once "guidv4.php" ?>
 <?php
+function base64_to_jpeg($base64_string, $output_file) {
+    // open the output file for writing
+    $ifp = fopen( $output_file, 'wb' );
+
+    // split the string on commas
+    // $data[ 0 ] == "data:image/png;base64"
+    // $data[ 1 ] == <actual base64 string>
+    $data = explode( ',', $base64_string );
+
+    // we could add validation here with ensuring count( $data ) > 1
+    fwrite( $ifp, base64_decode( $data[1] ) );
+
+    // clean up the file resource
+    fclose( $ifp );
+
+    return $output_file;
+}
+
+
+
 $name = "";
+$ext="";
 $image_url = "";
 $image = "https://app.hhhtm.com/resources/assets/img/upload_img.jpg";
 $file_loading_error=[];
@@ -15,31 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     else{
         $target_dir = "uploads/";
-        $ext = pathinfo(basename($_FILES["fileToUpload"]["name"]), PATHINFO_EXTENSION);
+        $ext = $_POST["fileExt"];
         $target_file = $target_dir.guidv4().".".$ext;
         $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-// Check if image file is a actual image or fake image
-        if(isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            if($check !== false) {
-                $uploadOk = 1;
-            } else {
-                array_push($file_loading_error, "File is not an image.");
-                $uploadOk = 0;
-            }
-        }
-
-// Check file size
-        if ($_FILES["fileToUpload"]["size"] > 500000) {
-            array_push($file_loading_error, "Sorry, your file is too large.");
-            $uploadOk = 0;
-        }
 
 // Allow certain file formats
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" ) {
+        if($ext != "jpg" && $ext != "png" && $ext != "jpeg"
+            && $ext != "gif" ) {
             array_push($file_loading_error, "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
             $uploadOk = 0;
         }
@@ -49,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             array_push($file_loading_error, "Sorry, your file was not uploaded.");
 // if everything is ok, try to upload file
         } else {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            if(base64_to_jpeg($image, $target_file)) {
                 $stmt = $dbh->prepare("INSERT INTO animals (id, name, image) VALUES (NULL, :name, :image);");
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':image', $target_file);
@@ -114,7 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <img style='width: 300px; height: 300px; border-radius: 50%;' id='blah'
                          src='{$image}' alt='your image' /> 
                          
-                    <input type='hidden' value='{$image}' id='imageUpload' name='imageUpload'>";
+                    <input type='hidden' value='{$image}' id='imageUpload' name='imageUpload'>
+                    <input type='hidden' value='{$ext}' id='fileExt' name='fileExt'>";
                          ?>
 
 

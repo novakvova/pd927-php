@@ -38,6 +38,7 @@ $(function() {
             const [file] = uploader[0].files
 
             if (file) {
+                $("#fileExt").val(file.name.split('.').pop());
                 var reader  = new FileReader();
                 reader.onload = function(event)
                 {
